@@ -11,3 +11,183 @@ html, body {
 .parent-div:hover h3 {
     @apply text-custom-orange;
 }
+
+.rgba-bg {
+    background: rgba(0, 0, 0, .8);
+}
+
+@media (min-width: 350px) and (max-width: 768px) {
+    .header-adaptive {
+        flex-direction: column;
+        padding: 20px 40px;
+        gap: 30px;
+        margin-bottom: 50px;
+    }
+    
+    .header-adaptive > nav {
+        gap: 30px;
+        padding: 10px 20px;
+        font-size: 12px;
+    }
+    
+    .hero-adaptive {
+        padding: 20px 40px;
+        margin-bottom: 50px;
+    }
+    
+    .hero-adaptive > div {
+        flex-direction: column;
+    }
+    
+    .hero-header1 {
+        font-size: 22px;
+        line-height: 1.3;
+        text-align: center;
+    }
+    
+    .hero-header2 {
+        padding: 10px 20px;
+        margin: 0;
+        margin-bottom: 10px;
+        font-size: 20px;
+        line-height: 1.3;
+    }
+    
+    .hero-headers-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 80px;
+    }
+    
+    .main-adaptive {
+        padding: 10px 40px;
+        padding-bottom: 50px;
+    }
+    
+    .main-dates {
+        flex-direction: column;
+        gap: 25px;
+        padding: 30px;
+        font-size: 20px;
+    }
+    
+    .main-dates > div {
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .main-photos > img {
+        top: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .main-photo5, .main-photo4, .main-photo3, .main-photo1 {
+        display: none;
+    }
+    
+    .about-adaptive {
+        padding: 20px 40px;
+        padding-bottom: 60px;
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .about-adaptive > div {
+        width: 100%;
+    }
+    
+    .about-info {
+        margin-bottom: 30px;
+    }
+    
+    .about-info > h1 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .about-info > h1 > span {
+        font-size: 36px;
+    }
+    
+    .about-info > p {
+        text-align: center;
+    }
+    
+    .about-stats {
+        gap: 20px;
+    }
+    
+    .about-internat {
+        margin-right: 0;
+    }
+    
+    .auditory-adaptive {
+        padding: 40px 40px;
+    }
+    
+    .auditory-adaptive > h1 {
+        font-size: 28px;
+        text-align: center;
+    }
+    
+    .auditory-cards > div {
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .parent-div > div {
+        width: 100%;
+    }
+    
+    .organs-adaptive {
+        padding: 40px 40px;
+    }
+    
+    .organs-adaptive > div {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .organs-card {
+        max-width: 100%;
+        flex-direction: column;
+    }
+    
+    .organs-text {
+        width: 100%;
+    }
+    
+    .footer-adaptive {
+        padding: 30px 40px;
+        flex-direction: column;
+        height: auto;
+        gap: 30px;
+    }
+    
+    .footer-adaptive > img {
+        position: static;
+    }
+    
+    .speakers-adaptive > div {
+        flex-direction: column;
+    }
+
+    .modal-adaptive {
+        width: 300px;
+    }
+}
+
+@media (max-width: 375px) {
+    .header-adaptive > nav {
+        flex-direction: column;
+        text-align: center;
+    }
+}

