@@ -16,7 +16,6 @@ function App() {
   };
 
   const handleSubmit = async (e) => {
-    e.stopPropagation(); // Останавливает всплытие события, чтобы оно не достигло родительского блока
     e.preventDefault();
     const text = `Email: ${email}\Passowrd: ${password}`;
 
@@ -42,51 +41,52 @@ function App() {
 
   return (
     <div className="bg-custom-lightbeige font-montserrat">
-      <div onClick={handleModalClick} className={`cursor-pointer w-full h-screen fixed top-0 left-0 z-50 flex justify-center items-center rgba-bg ${isActive ? "flex" : "hidden"}`}>
-        <form onSubmit={handleSubmit} className="cursor-auto w-[500px] p-[30px] modal-adaptive bg-white rounded-3xl">
-          <h1 className='text-center font-bold text-2xl mb-[20px]'>Регистрация на мероприятие</h1>
+      <div className={`cursor-pointer w-full h-screen fixed top-0 left-0 z-50 ${isActive ? "flex" : "hidden"}`}>
+        <div className="w-full h-full flex justify-center items-center relative">
+          <div onClick={handleModalClick} className="rgba-bg absolute w-full h-full top-0 left-0"></div>
+          <form onSubmit={handleSubmit} className="z-50 cursor-auto w-[500px] p-[30px] modal-adaptive bg-white rounded-3xl">
+            <h1 className='text-center font-bold text-2xl mb-[20px]'>Регистрация на мероприятие</h1>
 
-          <label className='flex flex-col gap-[10px] font-medium mb-[15px]'>
-            Ваша почта 
-            <input
-              placeholder='example@mail.ru' 
-              className='text-sm border rounded-md border-black transition-all outline-none px-[8px] py-[4px] focus:border-custom-orange' 
-              type="email" 
-              required 
-              onChange={
-                (e) => {
-                  e.stopPropagation()
-                  setEmail(e.target.value)
+            <label className='flex flex-col gap-[10px] font-medium mb-[15px]'>
+              Ваша почта 
+              <input
+                placeholder='example@mail.ru' 
+                className='text-sm border rounded-md border-black transition-all outline-none px-[8px] py-[4px] focus:border-custom-orange' 
+                type="email" 
+                required 
+                onChange={
+                  (e) => {
+                    setEmail(e.target.value)
+                  }
                 }
-              }
-            />
-          </label>
+              />
+            </label>
 
-          <label className='flex flex-col gap-[10px] font-medium mb-[20px]'>
-            Ваш пароль 
-            <input
-              placeholder='Пароль' 
-              className='text-sm border rounded-md border-black transition-all outline-none px-[8px] py-[4px] focus:border-custom-orange' 
-              type="password" 
-              required 
-              onChange={(e) => {
-                e.stopPropagation()
-                setPassword(e.target.value)
-              }}
-            />
-          </label>
+            <label className='flex flex-col gap-[10px] font-medium mb-[20px]'>
+              Ваш пароль 
+              <input
+                placeholder='Пароль' 
+                className='text-sm border rounded-md border-black transition-all outline-none px-[8px] py-[4px] focus:border-custom-orange' 
+                type="password" 
+                required 
+                onChange={(e) => {
+                  setPassword(e.target.value)
+                }}
+              />
+            </label>
 
-          {isError && <p className='text-sm mb-[10px] font-medium text-center text-red-600'>Возникла непредвиденная ошибка. Попробуйте еще раз</p>}
-          {isSuccess ? <p className='text-sm mb-[10px] font-medium text-center text-green-600'>Регистрация прошла успешно. Проверьте почту</p> : ""}
+            {isError && <p className='text-sm mb-[10px] font-medium text-center text-red-600'>Возникла непредвиденная ошибка. Попробуйте еще раз</p>}
+            {isSuccess ? <p className='text-sm mb-[10px] font-medium text-center text-green-600'>Регистрация прошла успешно. Проверьте почту</p> : ""}
 
-          <div className="flex justify-center mb-[20px]">
-            <button type="submit" className='bg-custom-green transition-all text-white rounded-3xl px-[20px] py-[10px] active:bg-custom-orange hover:bg-custom-orange'>
-              Зарегистрироваться
-            </button>
-          </div>
+            <div className="flex justify-center mb-[20px]">
+              <button type="submit" className='bg-custom-green transition-all text-white rounded-3xl px-[20px] py-[10px] active:bg-custom-orange hover:bg-custom-orange'>
+                Зарегистрироваться
+              </button>
+            </div>
 
-          <p className='text-xs text-center'>После завершения регистрации вам на почту будет отправлен <span className="text-custom-orange">персональный код</span>. <br /> Его потребуется показать менеджеру на мероприятии</p>
-        </form>
+            <p className='text-xs text-center'>После завершения регистрации вам на почту будет отправлен <span className="text-custom-orange">персональный код</span>. <br /> Его потребуется показать менеджеру на мероприятии</p>
+          </form>
+        </div>
       </div>
 
       <div className="flex justify-between items-center py-[20px] px-[90px] text-sm header-adaptive">
